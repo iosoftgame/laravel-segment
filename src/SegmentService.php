@@ -193,4 +193,8 @@ class SegmentService implements SegmentServiceContract
     {
         return filter_var($this->config['safe_mode'] ?? true, FILTER_VALIDATE_BOOL);
     }
+    protected function getTimezone(): bool
+    {
+        return sprintf('%s:', $this->config['timezone'] ?? 'UTC');
+    }
 }

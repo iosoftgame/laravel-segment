@@ -34,6 +34,10 @@ function setWriteKey(string $key = 'key_1234'): void
 {
     config(['segment.write_key' => $key]);
 }
+function setTimeZone(string $timezone = 'UTC'): void
+{
+    config(['segment.timezone' => $timezone]);
+}
 
 function arraysMatch(array $arrayOne, array $arrayTwo)
 {

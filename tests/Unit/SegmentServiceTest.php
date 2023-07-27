@@ -24,6 +24,9 @@ it('can track a user using the track method with global user and context', funct
     // And we have set a write key
     setWriteKey();
 
+    // And we have set a timezone
+    setTimeZone();
+
     // And we have set global user
     Segment::setGlobalUser($user);
 
@@ -50,7 +53,7 @@ it('can track a user using the track method with global user and context', funct
             && arraysMatch($request['batch'][0], [
                 'type' => 'track',
                 'userId' => 'abcd',
-                'timestamp' => (new DateTime())->format('Y-m-d\TH:i:s\Z'),
+                'timestamp' => (new DateTime())->setTimezone('UTC')->format('Y-m-d\TH:i:s\Z'),
                 'properties' => [
                     'name' => 'special',
                 ],
@@ -68,6 +71,9 @@ it('can identify a user using the identify method with global user and context',
 
     // And we have set a write key
     setWriteKey();
+
+    // And we have set a timezone
+    setTimeZone();
 
     // And we have set global user
     Segment::setGlobalUser($user);
@@ -95,7 +101,7 @@ it('can identify a user using the identify method with global user and context',
             && arraysMatch($request['batch'][0], [
                 'type' => 'identify',
                 'userId' => 'abcd',
-                'timestamp' => (new DateTime())->format('Y-m-d\TH:i:s\Z'),
+                'timestamp' => (new DateTime())->setTimezone('UTC')->format('Y-m-d\TH:i:s\Z'),
                 'traits' => [
                     'has_confirmed_something' => true,
                 ],
@@ -137,6 +143,9 @@ it('can track a user using the track method for a given user', function () {
     // And we have set a write key
     setWriteKey();
 
+    // And we have set a timezone
+    setTimeZone();
+
     // And we are faking the Http facade
     Http::fake();
 
@@ -155,7 +164,7 @@ it('can track a user using the track method for a given user', function () {
             && arraysMatch($request['batch'][0], [
                 'type' => 'track',
                 'userId' => 'abcd',
-                'timestamp' => (new DateTime())->format('Y-m-d\TH:i:s\Z'),
+                'timestamp' => (new DateTime())->setTimezone('UTC')->format('Y-m-d\TH:i:s\Z'),
                 'properties' => [
                     'name' => 'special',
                 ],
@@ -177,6 +186,9 @@ it('can identify a user using the identify method for a given user', function ()
     // And we are faking the Http facade
     Http::fake();
 
+    // And we have set a timezone
+    setTimeZone();
+
     // When we call the track method
     Segment::forUser($user)->identify([
         'has_confirmed_something' => true,
@@ -192,7 +204,7 @@ it('can identify a user using the identify method for a given user', function ()
             && arraysMatch($request['batch'][0], [
                 'type' => 'identify',
                 'userId' => 'abcd',
-                'timestamp' => (new DateTime())->format('Y-m-d\TH:i:s\Z'),
+                'timestamp' => (new DateTime())->setTimezone('UTC')->format('Y-m-d\TH:i:s\Z'),
                 'traits' => [
                     'has_confirmed_something' => true,
                 ],
@@ -209,6 +221,9 @@ it('defers tracking events until terminate is called when deferred is enabled', 
 
     // And we have set a write key
     setWriteKey();
+
+    // And we have set a timezone
+    setTimeZone();
 
     // And we are faking the Http facade
     Http::fake();
@@ -237,7 +252,7 @@ it('defers tracking events until terminate is called when deferred is enabled', 
             && arraysMatch($request['batch'][0], [
                 'type' => 'track',
                 'userId' => 'abcd',
-                'timestamp' => (new DateTime())->format('Y-m-d\TH:i:s\Z'),
+                'timestamp' => (new DateTime())->setTimezone('UTC')->format('Y-m-d\TH:i:s\Z'),
                 'properties' => [
                     'name' => 'special',
                 ],
@@ -246,7 +261,7 @@ it('defers tracking events until terminate is called when deferred is enabled', 
             && arraysMatch($request['batch'][1], [
                 'type' => 'identify',
                 'userId' => 'abcd',
-                'timestamp' => (new DateTime())->format('Y-m-d\TH:i:s\Z'),
+                'timestamp' => (new DateTime())->setTimezone('UTC')->format('Y-m-d\TH:i:s\Z'),
                 'traits' => [
                     'seen_email' => true,
                 ],
